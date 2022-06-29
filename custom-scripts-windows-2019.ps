@@ -1,0 +1,42 @@
+# https://howto.hyonix.com/article/how-to-install-telnet-client-in-windows-server/
+
+# Administrator powershell -> 
+
+Install-WindowsFeature -name Telnet-Client
+
+####
+
+
+# https://code2care.org/howto/install-notepad-plus-plus-using-windows-powershell
+
+# Administrator powershell ->
+
+Invoke-WebRequest https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.2/npp.8.4.2.Installer.exe -OutFile c:\npp.8.4.2.Installer.exe
+
+Start-Process .\npp.8.4.2.Installer.exe /S -NoNewWindow -Wait -PassThru
+
+####
+
+
+# https://gist.github.com/dansmith65/7dd950f183af5f5deaf9650f2ad3226c
+
+# Administrator powershell ->
+
+$dlurl = 'https://7-zip.org/' + (Invoke-WebRequest -UseBasicParsing -Uri 'https://7-zip.org/' | Select-Object -ExpandProperty Links | Where-Object {($_.outerHTML -match 'Download')-and ($_.href -like "a/*") -and ($_.href -like "*-x64.exe")} | Select-Object -First 1 | Select-Object -ExpandProperty href)
+# modified to work without IE
+# above code from: https://perplexity.nl/windows-powershell/installing-or-updating-7-zip-using-powershell/
+$installerPath = Join-Path $env:TEMP (Split-Path $dlurl -Leaf)
+Invoke-WebRequest $dlurl -OutFile $installerPath
+Start-Process -FilePath $installerPath -Args "/S" -Verb RunAs -Wait
+Remove-Item $installerPath
+
+####
+
+
+# https://docs.microsoft.com/en-us/azure/virtual-machines/windows/tutorial-automate-vm-deployment
+
+# Tutorial - Deploy applications to a Windows virtual machine in Azure with the Custom Script Extension
+
+# https://docs.microsoft.com/en-us/azure/virtual-machines/extensions/custom-script-windows
+
+# Custom Script Extension for Windows
